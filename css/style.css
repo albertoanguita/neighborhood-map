@@ -34,7 +34,7 @@ body {
     flex-direction: column;
     flex-grow: 0;
     align-items: stretch;
-    min-width: 20%;
+    min-width: 10%;
 }
 
 /* Style for the search box */
@@ -81,9 +81,15 @@ ul {
     background-color: blanchedalmond;
 }
 
-/* selected location */
-.selected {
+/* pressed category filter */
+.pressed {
     background-color: orange;
+}
+
+/* selected */
+.selected {
+    border: solid 2px darkred;
+    background-color: oldlace;
 }
 
 /* extra info (yelp or wikipedia) elements */

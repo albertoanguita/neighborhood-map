@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Neighborhood Map</title>
     <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
 
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBOL3jDje0R7wHgBfziYzOqENrk2PwnzRI&libraries=places"></script>
     <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/hmac-sha1.js"></script>
@@ -21,10 +22,10 @@
             <div id="filtersList">
                 <!-- each category filter is bound to the toggleFilter function, passing the appropriate parameter (the category value) -->
                 <!-- if their respective category filter is selected (true), the element is given an additional 'selected' class for painting the background with color -->
-                <img class="filter" data-bind="click: function() { toggleFilter('museum') }, attr: {src: categoryFilters().museum().imgSrc()}, css: { selected: categoryFilters().museum().state() }" title="museums">
-                <img class="filter" data-bind="click: function() { toggleFilter('restaurant') }, attr: {src: categoryFilters().restaurant().imgSrc()}, css: { selected: categoryFilters().restaurant().state() }" title="restaurants">
-                <img class="filter" data-bind="click: function() { toggleFilter('bar') }, attr: {src: categoryFilters().bar().imgSrc()}, css: { selected: categoryFilters().bar().state() }" title="bars">
-                <img class="filter" data-bind="click: function() { toggleFilter('theater') }, attr: {src: categoryFilters().theater().imgSrc()}, css: { selected: categoryFilters().theater().state() }" title="theaters">
+                <img class="filter" data-bind="click: function() { toggleFilter('museum') }, attr: {src: categoryFilters().museum().imgSrc()}, css: { pressed: categoryFilters().museum().state() }" title="museums">
+                <img class="filter" data-bind="click: function() { toggleFilter('restaurant') }, attr: {src: categoryFilters().restaurant().imgSrc()}, css: { pressed: categoryFilters().restaurant().state() }" title="restaurants">
+                <img class="filter" data-bind="click: function() { toggleFilter('bar') }, attr: {src: categoryFilters().bar().imgSrc()}, css: { pressed: categoryFilters().bar().state() }" title="bars">
+                <img class="filter" data-bind="click: function() { toggleFilter('theater') }, attr: {src: categoryFilters().theater().imgSrc()}, css: { pressed: categoryFilters().theater().state() }" title="theaters">
             </div>
             <hr>
             <!-- this element will only appear if the app failed (error getting google places data) -->
@@ -33,7 +34,7 @@
                 <!-- this list view shows the filtered locations (after applying the search and category filters) -->
                 <!-- they get the click event attached to the selectLocation function, with the appropriate index value -->
                 <ul data-bind="foreach: searchLocations">
-                    <li class="location" data-bind="text: name, click: function() { $parent.selectLocation(index()) }"></li>
+                    <li class="location" data-bind="text: name, click: function() { $parent.selectLocation(index()) }, css: { selected: $parent.selectedLocation() === $parent.locationList()[index()] }"></li>
                 </ul>
             </div>
             <!-- this element appears when the selected element must invoke the yelp api -->
@@ -64,7 +65,7 @@
             </div>
         </div>
         <!-- canvas for the google map -->
-        <div id="map-canvas" style="flex-grow: 1;"></div>
+        <div id="map-canvas" style="min-width: 60%; flex-grow: 1;"></div>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
