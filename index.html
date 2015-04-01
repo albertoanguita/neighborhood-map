@@ -1,6 +1,78 @@
-<!doctype html>
+<!DOCTYPE HTML>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <title>Neighborhood Map</title>
+    <link rel="stylesheet" href="css/style.css">
 
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBOL3jDje0R7wHgBfziYzOqENrk2PwnzRI&libraries=places"></script>
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/hmac-sha1.js"></script>
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/enc-base64-min.js"></script>
+    <script src="js/oauth-1.0a.js"></script>
+    <script src="js/oauth-signature.js"></script>
 </head>
 <body>
+    <!-- app is divided in two sections: on the left we place the search and location list column. On the right, the google map -->
+    <!-- we used flex to align the elements -->
+    <div id="main-app">
+        <div id="search-column">
+            <!-- the input element is bound to searchString, so when the user types a text, this observable is modified -->
+            <input type="text" placeholder="search places..." data-bind="textInput: searchString">
+            <div id="filtersList">
+                <!-- each category filter is bound to the toggleFilter function, passing the appropriate parameter (the category value) -->
+                <!-- if their respective category filter is selected (true), the element is given an additional 'selected' class for painting the background with color -->
+                <img class="filter" data-bind="click: function() { toggleFilter('museum') }, attr: {src: categoryFilters().museum().imgSrc()}, css: { selected: categoryFilters().museum().state() }" title="museums">
+                <img class="filter" data-bind="click: function() { toggleFilter('restaurant') }, attr: {src: categoryFilters().restaurant().imgSrc()}, css: { selected: categoryFilters().restaurant().state() }" title="restaurants">
+                <img class="filter" data-bind="click: function() { toggleFilter('bar') }, attr: {src: categoryFilters().bar().imgSrc()}, css: { selected: categoryFilters().bar().state() }" title="bars">
+                <img class="filter" data-bind="click: function() { toggleFilter('theater') }, attr: {src: categoryFilters().theater().imgSrc()}, css: { selected: categoryFilters().theater().state() }" title="theaters">
+            </div>
+            <hr>
+            <!-- this element will only appear if the app failed (error getting google places data) -->
+            <div data-bind="visible: appStatus() === 'error'" style="margin: 20px;">Error accessing the Google Places API. Please try again later</div>
+            <div id="result-list">
+                <!-- this list view shows the filtered locations (after applying the search and category filters) -->
+                <!-- they get the click event attached to the selectLocation function, with the appropriate index value -->
+                <ul data-bind="foreach: searchLocations">
+                    <li class="location" data-bind="text: name, click: function() { $parent.selectLocation(index()) }"></li>
+                </ul>
+            </div>
+            <!-- this element appears when the selected element must invoke the yelp api -->
+            <div class="extra-info" data-bind="visible: selectedLocationInvokesYelp">
+                <h4>Yelp information for <span data-bind="text: selectedLocation() != null ? selectedLocation().name : ''"></span><span>:</span></h4>
+                <!-- the request has not yielded results yet, show this 'searching' element -->
+                <div class="yelp-data" data-bind="visible: yelpResults().state() === 'no-results'">Searching...</div>
+                <!-- request response received, display it -->
+                <div class="yelp-data" data-bind="visible: yelpResults().state() === 'results'">
+                    <p>Score: <span data-bind="text: yelpResults().score()"></span> <a data-bind="attr: {href: yelpResults().url()}">(visit page)</a></p>
+                </div>
+                <!-- the request failed, display an error message -->
+                <div class="yelp-data" data-bind="visible: yelpResults().state() === 'error'">Error retrieving information from Yelp</div>
+            </div>
+            <!-- this element appears when the selected element must invoke the wikipedia api -->
+            <div class="extra-info" data-bind="visible: selectedLocationInvokesWikipedia">
+                <h4>Wikipedia articles for <span data-bind="text: selectedLocation() != null ? selectedLocation().name : ''"></span><span>:</span></h4>
+                <!-- the request has not yielded results yet, show this 'searching' element -->
+                <div data-bind="visible: wikiResults().state() === 'no-results'">Searching...</div>
+                <!-- request response received, display it (a new list view) -->
+                <div data-bind="visible: wikiResults().state() === 'results'">
+                    <ul data-bind="foreach: wikiResults().articles">
+                        <li><a data-bind="text: articleTitle, attr: { href: articleURL }"></a></li>
+                    </ul>
+                </div>
+                <!-- the request failed, display an error message -->
+                <div data-bind="visible: wikiResults().state() === 'error'">Error retrieving information from Wikipedia</div>
+            </div>
+        </div>
+        <!-- canvas for the google map -->
+        <div id="map-canvas" style="flex-grow: 1;"></div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="js/libs/knockout-3.2.0.js"></script>
+    <script src="js/locations-data.js"></script>
+    <script src="js/maps-helper.js"></script>
+    <script src="js/yelp-api-helper.js"></script>
+    <script src="js/wiki-api-helper.js"></script>
+    <script src="js/script.js"></script>
 </body>
+</html>

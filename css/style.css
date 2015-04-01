@@ -1,0 +1,97 @@
+* {
+    /*border: 1px solid red;*/
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+    font-family: 'Lato', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#main-app {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    align-items: stretch;
+}
+
+#search-column {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0;
+    align-items: stretch;
+    min-width: 20%;
+}
+
+/* Style for the search box */
+input {
+    background-color: aliceblue;
+    margin: 15px;
+    font-size: 20px;
+}
+
+/* container of the category filters */
+#filtersList {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+/* category filters */
+.filter {
+    max-width:30px;
+    max-height:30px;
+}
+
+hr {
+    border: 2px solid darkslategray;
+    margin: 4px;
+}
+
+/* items in the list view (also for the wikipedia articles) */
+ul {
+    list-style-type: none;
+    margin: 10px;
+    padding: 0;
+}
+
+/* displayed location elements */
+.location {
+    border-bottom: 1px solid darkgrey;
+    padding: 5px;
+}
+
+/* locations get shaded when the mouse passes over them */
+.location:hover {
+    background-color: blanchedalmond;
+}
+
+/* selected location */
+.selected {
+    background-color: orange;
+}
+
+/* extra info (yelp or wikipedia) elements */
+.extra-info {
+    margin: 15px;
+}
+
+/* specific yelp info displayed */
+.yelp-data {
+    margin: 15px;
+}

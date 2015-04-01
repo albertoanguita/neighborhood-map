@@ -1,0 +1,8 @@
+Websites visited during this project:
+
+Mozilla javascript reference: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference
+w3schools javascript reference: http://www.w3schools.com/jsref/
+Google Maps API: https://developers.google.com/maps/documentation/javascript/
+Yelp API: https://www.yelp.com/developers/documentation
+Flex reference: https://css-tricks.com/snippets/css/a-guide-to-flexbox/
+And stackoverflow... many times.......
