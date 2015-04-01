@@ -16,7 +16,8 @@
     <!-- app is divided in two sections: on the left we place the search and location list column. On the right, the google map -->
     <!-- we used flex to align the elements -->
     <div id="main-app">
-        <div id="search-column">
+
+        <div id="search-column" data-bind="visible: showSearchPanel">
             <!-- the input element is bound to searchString, so when the user types a text, this observable is modified -->
             <input type="text" placeholder="search places..." data-bind="textInput: searchString">
             <div id="filtersList">
@@ -30,7 +31,7 @@
             <hr>
             <!-- this element will only appear if the app failed (error getting google places data) -->
             <div data-bind="visible: appStatus() === 'error'" style="margin: 20px;">Error accessing the Google Places API. Please try again later</div>
-            <div id="result-list">
+            <div id="result-list" style="overflow-y: auto">
                 <!-- this list view shows the filtered locations (after applying the search and category filters) -->
                 <!-- they get the click event attached to the selectLocation function, with the appropriate index value -->
                 <ul data-bind="foreach: searchLocations">
@@ -65,7 +66,10 @@
             </div>
         </div>
         <!-- canvas for the google map -->
-        <div id="map-canvas" style="min-width: 60%; flex-grow: 1;"></div>
+        <div style="min-width: 65%; flex-grow: 1; display: flex; flex-direction: column; position: relative">
+            <div id="map-canvas" style="flex-grow: 1; height: 100%;"></div>
+            <img src="img/menu.png" style="max-width: 25px; max-height: 25px; position: absolute; top: 0;" data-bind="click: toggleHideSearchPanel">
+        </div>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>

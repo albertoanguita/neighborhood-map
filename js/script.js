@@ -196,6 +196,7 @@ var ViewModel = function () {
     // the results of the last wikipedia ajax request. Upon changes on it, several html components
     // become visible and show the contents of this object
     this.wikiResults = ko.observable(new WikiResults());
+    this.showSearchPanel = ko.observable(true);
 
     // initialize google map and search for markers for each of the available locations
     initializeMap('map-canvas');
@@ -290,6 +291,10 @@ var ViewModel = function () {
             wikiRequest(self.selectedLocation().name(), self.wikiResults());
         }
     }, this);
+
+    this.toggleHideSearchPanel = function() {
+        this.showSearchPanel(!this.showSearchPanel());
+    }
 };
 
 // the global ViewModel object is declared (used in the maps-helper.js code), and the bindings with the view are applied

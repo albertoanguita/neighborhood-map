@@ -32,7 +32,7 @@ body {
 #search-column {
     display: flex;
     flex-direction: column;
-    flex-grow: 0;
+    flex-grow: 1;
     align-items: stretch;
     min-width: 10%;
 }
